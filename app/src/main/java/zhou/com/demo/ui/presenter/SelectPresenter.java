@@ -2,6 +2,7 @@ package zhou.com.demo.ui.presenter;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -11,6 +12,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import zhou.com.demo.api.Api;
 import zhou.com.demo.base.RxPresenter;
+import zhou.com.demo.bean.KSUserBean;
 import zhou.com.demo.bean.ListOfBLState;
 import zhou.com.demo.bean.QZDWKSList;
 import zhou.com.demo.ui.activity.LoginActivity;
@@ -70,7 +72,27 @@ public class SelectPresenter extends RxPresenter<SelectContract.View> implements
     }
 
     @Override
-    public void Get_KSUser() {
+    public void Get_KSUser(String jsonRequest) {
+        Subscription rxSubscription = Api.getInstance(okHttpClient).Get_KSUser("Get_KSUser",jsonRequest)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<KSUserBean>() {
+                    @Override
+                    public void onCompleted() {
+                        mView.complete();
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError();
+                        Log.d("", "onError: "+e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(KSUserBean ksUserBean) {
+
+                    }
+                });
+        addSubscrebe(rxSubscription);
     }
 }

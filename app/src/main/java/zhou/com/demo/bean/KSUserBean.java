@@ -10,6 +10,10 @@ import java.io.Serializable;
 
 public class KSUserBean implements Serializable{
 
+    public KSUserBean(String userName) {
+        UserName = userName;
+    }
+
     /**
      * UserID : lhf
      * UserPsw : null

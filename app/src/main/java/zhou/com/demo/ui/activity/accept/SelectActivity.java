@@ -51,6 +51,7 @@ public class SelectActivity extends BaseActivity implements SelectContract.View,
         mHotReviewAdapter = new SelectApater(mContext, mHotReviewList, this);
         mRvHotReview.setAdapter(mHotReviewAdapter);
 
+        dialog.show();
         mPresenter.attachView(this);
         mPresenter.Get_QZDWKS_List();
 
@@ -97,22 +98,24 @@ public class SelectActivity extends BaseActivity implements SelectContract.View,
         if (mPresenter != null) {
             mPresenter.detachView();
         }
+        dialog.dismiss();
     }
 
     @Override
     public void onItemClick(View view, int position, QZDWKSList.DatasBean data) {
-        String jsonRequest = "{\"ActiveCode\":\"xxx\",\"QZH\":\"\",\"KSCode\":\"\",\"UserRightType\":\"\"}";
-        Log.d(TAG, "onItemClick: "+data.getKSCode());
+        String ActiveCode = App.getInstance().getLoginBean().getActiveCode();
+        String jsonRequest = "{\"ActiveCode\":\""+ActiveCode+"\",\"QZH\":\""+data.getQZH()+"\",\"KSCode\":\""+data.getKSCode()+"\",\"UserRightType\":\"SW\"}";
+        mPresenter.Get_KSUser(jsonRequest);
     }
 
     @Override
     public void showError() {
-
+        dialog.dismiss();
     }
 
     @Override
     public void complete() {
-
+        dialog.dismiss();
     }
 
 

@@ -23,6 +23,6 @@ public interface SelectContract {
         void Get_QZDWKS_List();
         String getActiveCode();
 
-        void Get_KSUser();
+        void Get_KSUser(String jsonRequest);
     }
 }
