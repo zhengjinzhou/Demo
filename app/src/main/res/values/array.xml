@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="main_tab">
+        <item>收文办理</item>
+        <item>发文办理</item>
+        <item>督查办理</item>
+        <item>会议办理</item>
+        <item>信访办理</item>
+        <item>公告留言</item>
+        <item>收文检索</item>
+        <item>发文检索</item>
+        <item>督查检索</item>
+        <item>信访检索</item>
+        <item>会议检索</item>
+        <item>个人文件夹</item>
+        <item>通讯录</item>
+    </string-array>
+
+    <string-array name="accept_tab">
+        <item>待办</item>
+        <item>办理中</item>
+        <item>办完</item>
+        <item>全部</item>
+    </string-array>
+
+    <string-array name="send_tab">
+        <item>须办理</item>
+        <item>办理中</item>
+        <item>办完</item>
+        <item>全部</item>
+    </string-array>
+
+    <string-array name="accept_info_tab">
+        <item>办理</item>
+        <item>办理记录</item>
+        <item>转派记录</item>
+    </string-array>
+</resources>

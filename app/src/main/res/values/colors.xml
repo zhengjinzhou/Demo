@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2badda</color>
+    <color name="colorPrimaryDark">#2badda</color>
+    <color name="colorAccent">#2badda</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <!--字体-->
+    <color name="bg_color">#1e1e1e</color>
+    <!--通用背景色-->
+    <color name="common_bg">@color/white</color>
+    <color name="common_gray_bg">#EEEEEE</color>
+    <!--通用一级标题的颜色-->
+    <color name="common_h1">#212121</color>
+    <!--通用二级标题的颜色         下划线统一颜色 -->
+    <color name="common_h2">#B2B2B2</color>
+    <!--通用三级标题的颜色-->
+    <color name="common_h3">#727272</color>
+    <!--通用分割线细-->
+    <color name="common_divider_narrow">#E3E3E3</color>
+    <color name="yellow">#ffff00</color> <!-- 黄色 -->
+    <!--通用触摸背景色-->
+    <color name="common_touch_bg">#E3E3E3</color>
+    <color name="gainsboro">#dcdcdc</color> <!-- 淡灰色 -->
+    <color name="gray">#808080</color> <!-- 灰色 -->
+    <color name="reader_menu_bg_color">#191919</color>
+    <color name="darkgoldenrod">#2badda</color> <!-- 暗金黄色 -->
+    <color name="bottom">#f5f5f5</color>
+    <color name="light_gray">#AAAAAA</color>
+    <color name="bottom_2">#f2f2f2</color>
+    <color name="tip">#88303F9F</color>
+    <color name="tip_blue">#485ff1</color>
+    <color name="txt_1">#555555</color>
+    <color name="txt_2">#2CA5CF</color>
+    <color name="little_red">#f54f4f</color>
+    <color name="bt_bg">#3ece89</color>
+    <color name="bg_accept">#f7142b</color>
+    <!--通用分割线粗-->
+    <color name="common_divider_wide">#EEEEEE</color>
+</resources>
