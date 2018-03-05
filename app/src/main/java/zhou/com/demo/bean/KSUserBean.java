@@ -15,20 +15,22 @@ public class KSUserBean implements Serializable{
     }
 
     /**
-     * UserID : lhf
+     * UserID : jsd
      * UserPsw : null
-     * UserName : 林红菲
-     * UserSNID : 20110514150818_100
+     * UserName : 江善东
+     * UserSNID : 20151209100010796
      * QZH : 999
      * DWName : 广东万维博通
-     * KSCode : 03
-     * KSName : 策划科
-     * Title : 科长
+     * KSCode : 01
+     * KSName : 局领导
+     * Title : 总工
      * JobDuty : null
      * isKSJR : null
      * vacInfo :
      * LoginTime : 0001-01-01T00:00:00
      */
+
+
 
     private String UserID;
     private Object UserPsw;

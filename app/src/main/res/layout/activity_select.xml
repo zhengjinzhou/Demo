@@ -7,6 +7,7 @@
     tools:context="zhou.com.demo.ui.activity.accept.SelectActivity">
 
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
@@ -29,12 +30,25 @@
             android:text="清空" />
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/rl"
+        android:background="@drawable/shape_common_dash_divide" />
+
     <zhou.com.demo.view.ReboundScrollView
-        android:paddingBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize">
-        <include layout="@layout/recycler_select" />
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingBottom="50dp">
+
+        <zhou.com.demo.view.CustomExpandableListView
+            android:id="@+id/elvListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:childDivider="@drawable/shape_common_dash_divide"
+            android:groupIndicator="@null"
+            android:listSelector="@drawable/shape_common_selector" />
     </zhou.com.demo.view.ReboundScrollView>
 
     <LinearLayout

@@ -2,6 +2,7 @@ package zhou.com.demo.ui.fragment.accept;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import java.util.LinkedHashSet;
@@ -78,6 +79,7 @@ public class AcceptFragment extends BaseRVFragment<ListOfBLState.DatasBean> impl
     public void configViews() {
         Log.d(TAG, "configViews: ");
         initAdapter(AcceptAdapter.class, true, false);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter.setOnItemLongClickListener(this);
         mPresenter.GetSWHandleListOfBLState();
     }

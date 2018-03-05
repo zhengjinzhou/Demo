@@ -57,6 +57,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void showError() {
         dialog.dismiss();
+        ToastUtils.showToast("连接超时，请重试");
     }
 
     @Override

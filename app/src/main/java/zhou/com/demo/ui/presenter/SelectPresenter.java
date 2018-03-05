@@ -2,15 +2,25 @@ package zhou.com.demo.ui.presenter;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import zhou.com.demo.api.Api;
+import zhou.com.demo.base.Constant;
 import zhou.com.demo.base.RxPresenter;
 import zhou.com.demo.bean.KSUserBean;
 import zhou.com.demo.bean.ListOfBLState;
@@ -27,11 +37,11 @@ import zhou.com.demo.ui.contract.SelectContract;
 public class SelectPresenter extends RxPresenter<SelectContract.View> implements SelectContract.Presenter<SelectContract.View>{
 
     Api api;
-    SelectActivity loginActivity;
+    SelectActivity selectActivity;
     OkHttpClient okHttpClient = new OkHttpClient();
 
-    public SelectPresenter(SelectActivity loginActivity){
-        this.loginActivity = loginActivity;
+    public SelectPresenter(SelectActivity selectActivity){
+        this.selectActivity = selectActivity;
         this.api = new Api(okHttpClient);
     }
     /**
@@ -51,12 +61,12 @@ public class SelectPresenter extends RxPresenter<SelectContract.View> implements
                     @Override
                     public void onError(Throwable e) {
                         mView.showError();
-                        Log.d("", "onError: "+e.getMessage());
+                        Log.d("科室列表", "onError: "+e.getMessage());
                     }
 
                     @Override
                     public void onNext(QZDWKSList qzdwksList) {
-                        Log.d("", "onNext: "+qzdwksList.toString());
+                        Log.d("科室列表", "onNext: "+qzdwksList.toString());
                         List<QZDWKSList.DatasBean> datas = qzdwksList.getDatas();
                         if (qzdwksList != null && mView != null) {
                             mView.ShowQZDWKS_ListComplete(datas);
@@ -71,28 +81,37 @@ public class SelectPresenter extends RxPresenter<SelectContract.View> implements
         return mView.setActiveCode();
     }
 
+    /**
+     * 科室人员列表
+     * @param jsonRequest
+     */
     @Override
     public void Get_KSUser(String jsonRequest) {
-        Subscription rxSubscription = Api.getInstance(okHttpClient).Get_KSUser("Get_KSUser",jsonRequest)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<KSUserBean>() {
-                    @Override
-                    public void onCompleted() {
-                        mView.complete();
-                    }
+        OkHttpClient okHttpClient = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder()
+                .add("Action", "Get_KSUser")
+                .add("jsonRequest", jsonRequest)
+                .build();
+        Request request = new Request.Builder().url(Constant.API_BASE_URL + "DMS_FileMan_Handler.ashx").post(formBody).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("科室人员列表", "onFailure: " + e.getMessage());
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.showError();
-                        Log.d("", "onError: "+e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(KSUserBean ksUserBean) {
-
-                    }
-                });
-        addSubscrebe(rxSubscription);
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String string = response.body().string();
+                Gson gson = new Gson();
+                List<KSUserBean> list = gson.fromJson(string, new TypeToken<List<KSUserBean>>() {}.getType());
+                Log.d("科室人员列表", "onResponse: " + string);
+                List<KSUserBean> mDatas = new ArrayList<>();
+                for (int i=0;i<list.size();i++){
+                    mDatas.add(new KSUserBean(list.get(i).getUserName()));
+                }
+                mView.showKSUserComplete(mDatas);
+            }
+        });
     }
 }

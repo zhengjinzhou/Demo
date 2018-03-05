@@ -41,9 +41,4 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/shape_common_dash_divide" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>

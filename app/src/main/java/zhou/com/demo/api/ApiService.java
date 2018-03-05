@@ -15,7 +15,6 @@ import zhou.com.demo.bean.QZDWKSList;
  */
 
 public interface ApiService {
-
     /**
      * 登录
      *
@@ -48,7 +47,8 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("SWMan/SWHandler.ashx")
-    Observable<?> GetNum(@Field("Action")String action, @Field("jsonRequest") String jsonRequest);
+    Observable<?>
+    GetNum(@Field("Action")String action, @Field("jsonRequest") String jsonRequest);
 
     /**
      * 按收文办理状态
@@ -59,7 +59,8 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("SWMan/SWHandler.ashx")
-    Observable<ListOfBLState> GetSWHandleListOfBLState(@Field("Action")String action, @Field("jsonRequest") String jsonRequest);
+    Observable<ListOfBLState>
+    GetSWHandleListOfBLState(@Field("Action")String action, @Field("jsonRequest") String jsonRequest);
 
     /**
      * 科室人员列表
@@ -69,6 +70,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("DMS_FileMan_Handler.ashx")
-    Observable<KSUserBean> Get_KSUser(@Field("Action") String action,@Field("jsonRequest") String jsonRequest);
+    Observable<KSUserBean>
+    Get_KSUser(@Field("Action")String action, @Field("jsonRequest") String jsonRequest);
 
 }

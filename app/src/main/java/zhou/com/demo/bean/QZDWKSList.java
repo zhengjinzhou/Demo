@@ -55,6 +55,13 @@ public class QZDWKSList implements Serializable{
     }
 
     public static class DatasBean {
+
+        public DatasBean(String QZH,String KSCode,String KSName) {
+            this.QZH = QZH;
+            this.KSCode = KSCode;
+            this.KSName = KSName;
+        }
+
         /**
          * QZH : 999
          * KSName : 局领导

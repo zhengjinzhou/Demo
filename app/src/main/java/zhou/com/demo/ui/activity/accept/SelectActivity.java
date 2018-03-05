@@ -1,43 +1,46 @@
 package zhou.com.demo.ui.activity.accept;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import zhou.com.demo.R;
 import zhou.com.demo.base.App;
 import zhou.com.demo.base.BaseActivity;
+import zhou.com.demo.base.Constant;
 import zhou.com.demo.bean.KSUserBean;
 import zhou.com.demo.bean.QZDWKSList;
 import zhou.com.demo.commno.OnRvItemClickListener;
-import zhou.com.demo.ui.adapter.accept.AcceptAdapter;
-import zhou.com.demo.ui.adapter.accept.SelectApater;
-import zhou.com.demo.ui.contract.LoginContract;
+import zhou.com.demo.ui.adapter.SelectAdapter;
 import zhou.com.demo.ui.contract.SelectContract;
-import zhou.com.demo.ui.presenter.LoginPresenter;
 import zhou.com.demo.ui.presenter.SelectPresenter;
-import zhou.com.demo.view.SupportDividerItemDecoration;
+import zhou.com.demo.view.CustomExpandableListView;
 
 /**
- * 选择经办人
+ * 选择经办人  清空
  */
-public class SelectActivity extends BaseActivity implements SelectContract.View, OnRvItemClickListener<QZDWKSList.DatasBean> {
+public class SelectActivity extends BaseActivity implements SelectContract.View {
 
     private static final String TAG = "SelectActivity";
     private SelectPresenter mPresenter = new SelectPresenter(this);
-    private SelectApater mHotReviewAdapter;
-    private List<QZDWKSList.DatasBean> mHotReviewList = new ArrayList<>();
-    @BindView(R.id.recyclerView) RecyclerView mRvHotReview;
-    @BindView(R.id.iv) ImageView iv;
-    boolean isClick = false;
-
+    @BindView(R.id.elvListView) CustomExpandableListView elvListView;
+    private List<QZDWKSList.DatasBean> maleGroups = new ArrayList<>();
+    private List<List<KSUserBean>> maleChilds = new ArrayList<>();
+    private SelectAdapter selectAdapter;
 
     @Override
     public int getLayout() {
@@ -46,50 +49,32 @@ public class SelectActivity extends BaseActivity implements SelectContract.View,
 
     @Override
     public void configView() {
-        mRvHotReview.setHasFixedSize(true);
-        mRvHotReview.setLayoutManager(new LinearLayoutManager(this));
-        mHotReviewAdapter = new SelectApater(mContext, mHotReviewList, this);
-        mRvHotReview.setAdapter(mHotReviewAdapter);
-
+        elvListView.setAdapter(selectAdapter);
         dialog.show();
         mPresenter.attachView(this);
         mPresenter.Get_QZDWKS_List();
-
-        iv.setBackground(getResources().getDrawable(R.drawable.next));
     }
 
     @Override
     public void initDatas() {
+        selectAdapter = new SelectAdapter(this, maleGroups, maleChilds);
+        selectAdapter.setItemClickListener(new ClickListener());
+    }
 
+    class ClickListener implements OnRvItemClickListener<QZDWKSList.DatasBean> {
+
+        @Override
+        public void onItemClick(View view, int position, QZDWKSList.DatasBean data) {
+            Log.d(TAG, "onItemClick: 111111111111111");
+            String ActiveCode = App.getInstance().getLoginBean().getActiveCode();
+            String jsonRequest = "{\"ActiveCode\":\"" + ActiveCode + "\",\"QZH\":\"" + data.getQZH() + "\",\"KSCode\":\"" + data.getKSCode() + "\",\"UserRightType\":\"SW\"}";
+            mPresenter.Get_KSUser(jsonRequest);
+        }
     }
 
     @Override
     public void initToolBar() {
 
-    }
-
-    @OnClick({R.id.rlWanve,R.id.tvSelect,R.id.tvClear,R.id.btSure,R.id.btCancel}) void onClick(View view){
-        switch (view.getId()){
-            case R.id.rlWanve:
-                if (!isClick){
-                    mRvHotReview.setVisibility(View.GONE);
-                    iv.setBackground(getResources().getDrawable(R.drawable.bottom));
-                    isClick = true;
-                }else {
-                    mRvHotReview.setVisibility(View.VISIBLE);
-                    iv.setBackground(getResources().getDrawable(R.drawable.next));
-                    isClick = false;
-                }
-                break;
-            case R.id.tvSelect:
-                break;
-            case R.id.tvClear:
-                break;
-            case R.id.btSure:
-                break;
-            case R.id.btCancel:
-                break;
-        }
     }
 
     @Override
@@ -102,13 +87,6 @@ public class SelectActivity extends BaseActivity implements SelectContract.View,
     }
 
     @Override
-    public void onItemClick(View view, int position, QZDWKSList.DatasBean data) {
-        String ActiveCode = App.getInstance().getLoginBean().getActiveCode();
-        String jsonRequest = "{\"ActiveCode\":\""+ActiveCode+"\",\"QZH\":\""+data.getQZH()+"\",\"KSCode\":\""+data.getKSCode()+"\",\"UserRightType\":\"SW\"}";
-        mPresenter.Get_KSUser(jsonRequest);
-    }
-
-    @Override
     public void showError() {
         dialog.dismiss();
     }
@@ -118,12 +96,13 @@ public class SelectActivity extends BaseActivity implements SelectContract.View,
         dialog.dismiss();
     }
 
-
     @Override
     public void ShowQZDWKS_ListComplete(List<QZDWKSList.DatasBean> qzdwksList) {
-        mHotReviewList.clear();
-        mHotReviewList.addAll(qzdwksList);
-        mHotReviewAdapter.notifyDataSetChanged();
+        maleGroups.clear();
+        for (int i=0;i<qzdwksList.size();i++){
+            maleGroups.add(new QZDWKSList.DatasBean(qzdwksList.get(i).getQZH(),qzdwksList.get(i).getKSCode(),qzdwksList.get(i).getKSName()));
+        }
+        selectAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -133,6 +112,13 @@ public class SelectActivity extends BaseActivity implements SelectContract.View,
 
     @Override
     public void showKSUserComplete(List<KSUserBean> ksUserBeans) {
-
+        Log.d(TAG, "showKSUserComplete: "+ksUserBeans.toString());
+        maleChilds.add(ksUserBeans);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                selectAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
