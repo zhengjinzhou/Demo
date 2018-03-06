@@ -1,4 +1,4 @@
-package zhou.com.demo.ui.adapter;
+package zhou.com.demo.ui.adapter.accept;
 
 import android.content.Context;
 import android.util.Log;
@@ -76,21 +76,15 @@ public class SelectAdapter extends BaseExpandableListAdapter {
     public View getGroupView(final int groupPosition, final boolean isExpanded, View convertView, ViewGroup parent) {
         final View group = inflater.inflate(R.layout.recycler_select, null);
         final ImageView ivArrow = group.findViewById(R.id.iv);
-        group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(group, groupPosition, groupArray.get(groupPosition));
-                    if (isExpanded) {
-                        ivArrow.setImageResource(R.drawable.next);
-                    } else {
-                        ivArrow.setImageResource(R.drawable.bottom);
-                    }
-                }
-            }
-        });
         TextView tvName = group.findViewById(R.id.tvKSName);
         tvName.setText(groupArray.get(groupPosition).getKSName());
+        if (isExpanded) {
+            ivArrow.setImageResource(R.drawable.bottom);
+            Log.d("", "getGroupView: ");
+        } else {
+            ivArrow.setImageResource(R.drawable.next);
+        }
+
         return group;
     }
 

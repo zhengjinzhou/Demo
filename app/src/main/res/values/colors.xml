@@ -37,4 +37,5 @@
     <color name="bg_accept">#f7142b</color>
     <!--通用分割线粗-->
     <color name="common_divider_wide">#EEEEEE</color>
+    <color name="managed">#28e317</color>
 </resources>

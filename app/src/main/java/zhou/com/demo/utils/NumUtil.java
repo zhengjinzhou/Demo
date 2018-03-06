@@ -21,7 +21,7 @@ import zhou.com.demo.ui.adapter.MainAdapter;
  */
 
 public class NumUtil {
-    public static void setText(final TextView view, String GetSWHandleNum) {
+    public static void setText(final String GetSWHandleNum) {
         String activeCode = App.getInstance().getLoginBean().getActiveCode();
         OkHttpClient okHttpClient = new OkHttpClient();
         FormBody build = new FormBody.Builder()
@@ -40,9 +40,7 @@ public class NumUtil {
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
                 Log.d("", "onResponse: "+string);
-                /*if (!string.equals("0")){
-                    view.setText(string);
-                }*/
+                SharedPreferencesUtil.getInstance().putString(GetSWHandleNum,string);
             }
         });
     }

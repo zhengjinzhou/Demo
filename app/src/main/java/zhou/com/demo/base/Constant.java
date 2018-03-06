@@ -11,4 +11,6 @@ public class Constant {
     public static final String API_BASE_URL = BASE_URL + "oasystem2018/Handlers/";
     //收文地址 发文地址是不同的
     public static final String SW_URL = API_BASE_URL + "/SWMan/SWHandler.ashx";
+    public static final String UserID = "UserID";
+    public static final String ISCHECK = "ISCHECK";
 }

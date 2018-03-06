@@ -55,7 +55,6 @@ public class AcceptFragment extends BaseRVFragment<ListOfBLState.DatasBean> impl
     @Override
     public void GetSWHandleListOfBLStateComplete(List<ListOfBLState.DatasBean> list) {
         mDatas = list;
-        Log.d(TAG, "GetSWHandleListOfBLStateComplete: "+list.toString());
         mAdapter.clear();
         mAdapter.addAll(list);
     }

@@ -13,6 +13,7 @@ import com.yuyh.easyadapter.recyclerview.EasyRVHolder;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Handler;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,6 +27,7 @@ import zhou.com.demo.base.Constant;
 import zhou.com.demo.bean.MainBean;
 import zhou.com.demo.commno.OnRvItemClickListener;
 import zhou.com.demo.utils.NumUtil;
+import zhou.com.demo.utils.SharedPreferencesUtil;
 
 /**
  * Created by zhou on 2018/2/26.
@@ -53,9 +55,10 @@ public class MainAdapter extends EasyRVAdapter<MainBean>{
                 itemClickListener.onItemClick(holder.getItemView(), position, item);
             }
         });
-
-        if (position ==0){
-            NumUtil.setText(text,"GetSWHandleNum");
+        if (position==0 && !SharedPreferencesUtil.getInstance().getString("GetSWHandleNum").equals("0")){
+            text.setVisibility(View.VISIBLE);
+            text.setText(SharedPreferencesUtil.getInstance().getString("GetSWHandleNum"));
         }
+
     }
 }

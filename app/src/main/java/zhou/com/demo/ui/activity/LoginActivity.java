@@ -4,7 +4,10 @@ package zhou.com.demo.ui.activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import butterknife.BindView;
@@ -12,11 +15,13 @@ import butterknife.OnClick;
 import zhou.com.demo.R;
 import zhou.com.demo.base.App;
 import zhou.com.demo.base.BaseActivity;
+import zhou.com.demo.base.Constant;
 import zhou.com.demo.bean.BaseBean;
 import zhou.com.demo.bean.LoginBean;
 import zhou.com.demo.bean.QZDWKSList;
 import zhou.com.demo.ui.contract.LoginContract;
 import zhou.com.demo.ui.presenter.LoginPresenter;
+import zhou.com.demo.utils.SharedPreferencesUtil;
 import zhou.com.demo.utils.ToastUtils;
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
@@ -24,6 +29,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     private static final String TAG = "LoginActivity";
     @BindView(R.id.et_username) EditText et_username;
     @BindView(R.id.et_password) EditText et_password;
+    @BindView(R.id.cb_remember) CheckBox cb_remember;
+    boolean isRemember = false;
+
     private String ActiviteCode;
     private LoginPresenter mPresenter = new LoginPresenter(this);
 
@@ -37,7 +45,21 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         mPresenter.attachView(this);
         et_username.setText("hhl");
         et_password.setText("1234qwer");
+        if (SharedPreferencesUtil.getInstance().getBoolean(Constant.ISCHECK)){
+            cb_remember.setChecked(SharedPreferencesUtil.getInstance().getBoolean(Constant.ISCHECK));
+            et_username.setText(SharedPreferencesUtil.getInstance().getString(Constant.UserID));
+        }
+
+        cb_remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    SharedPreferencesUtil.getInstance().putBoolean(Constant.ISCHECK,isChecked);
+                }
+            }
+        });
     }
+
 
     @Override
     public void initDatas() {
@@ -80,6 +102,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void loginComplete(LoginBean loginBean) {
         if (loginBean.isIsSuccess()) {
+            SharedPreferencesUtil.getInstance().putString(Constant.UserID,et_username.getText().toString());
             startToActivity(MainActivity.class);
             ActiviteCode = loginBean.getActiveCode();
             finish();

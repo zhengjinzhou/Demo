@@ -6,11 +6,13 @@
         <item>督查办理</item>
         <item>会议办理</item>
         <item>信访办理</item>
+        <item>三热线办理</item>
         <item>公告留言</item>
         <item>收文检索</item>
         <item>发文检索</item>
         <item>督查检索</item>
         <item>信访检索</item>
+        <item>三热线检索</item>
         <item>会议检索</item>
         <item>个人文件夹</item>
         <item>通讯录</item>
@@ -34,5 +36,11 @@
         <item>办理</item>
         <item>办理记录</item>
         <item>转派记录</item>
+    </string-array>
+
+    <string-array name="record_opinion">
+        <item>已阅读。</item>
+        <item>根据来文思路，建议全体人员传阅。</item>
+        <item>具体内容正在完善中。</item>
     </string-array>
 </resources>

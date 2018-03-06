@@ -40,7 +40,6 @@ public class AcceptPresenter extends RxPresenter<AcceptContract.View> implements
                 .subscribe(new Observer<ListOfBLState>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("", "onCompleted: ");
                         mView.complete();
                     }
 

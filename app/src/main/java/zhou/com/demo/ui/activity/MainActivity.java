@@ -63,6 +63,8 @@ public class MainActivity extends BaseActivity implements OnRvItemClickListener<
 
     @Override
     protected void onResume() {
+        NumUtil.setText("GetSWHandleNum");//收文待办数量
+        mAdapter.notifyDataSetChanged();
         super.onResume();
     }
 
@@ -84,6 +86,8 @@ public class MainActivity extends BaseActivity implements OnRvItemClickListener<
         mList.add(new MainBean(mDatas.get(10), R.drawable.ic_avatar));
         mList.add(new MainBean(mDatas.get(11), R.drawable.ic_avatar));
         mList.add(new MainBean(mDatas.get(12), R.drawable.ic_avatar));
+        mList.add(new MainBean(mDatas.get(13), R.drawable.ic_avatar));
+        mList.add(new MainBean(mDatas.get(14), R.drawable.ic_avatar));
     }
 
     @Override
