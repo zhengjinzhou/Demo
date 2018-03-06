@@ -4,6 +4,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import rx.Observable;
+import zhou.com.demo.bean.GetSWMainBean;
+import zhou.com.demo.bean.GetSWQWListBean;
 import zhou.com.demo.bean.KSUserBean;
 import zhou.com.demo.bean.ListOfBLState;
 import zhou.com.demo.bean.LoginBean;
@@ -72,5 +74,26 @@ public interface ApiService {
     @POST("DMS_FileMan_Handler.ashx")
     Observable<KSUserBean>
     Get_KSUser(@Field("Action")String action, @Field("jsonRequest") String jsonRequest);
+
+    /**
+     * 查看单件收文
+     * @param action
+     * @param jsonRequest
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("SWMan/SWHandler.ashx")
+    Observable<GetSWMainBean> GetSWMain(@Field("Action")String action, @Field("jsonRequest") String jsonRequest);
+
+    /**
+     * 收文附件列表
+     * 这里文档有个参数错误了
+     * @param action
+     * @param jsonRequest
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("SWMan/SWHandler.ashx")
+    Observable<GetSWQWListBean> GetSWQWList(@Field("Action")String action, @Field("jsonRequest") String jsonRequest);
 
 }

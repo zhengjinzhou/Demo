@@ -6,6 +6,8 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import zhou.com.demo.base.Constant;
+import zhou.com.demo.bean.GetSWMainBean;
+import zhou.com.demo.bean.GetSWQWListBean;
 import zhou.com.demo.bean.KSUserBean;
 import zhou.com.demo.bean.ListOfBLState;
 import zhou.com.demo.bean.LoginBean;
@@ -55,5 +57,13 @@ public class Api {
 
     public Observable<KSUserBean> Get_KSUser(String action,String jsonRequest){
         return service.Get_KSUser(action,jsonRequest);
+    }
+
+    public Observable<GetSWMainBean> GetSWMain(String action,String jsonRequest){
+        return service.GetSWMain(action,jsonRequest);
+    }
+
+    public Observable<GetSWQWListBean> GetSWQWList(String action,String jsonRequest){
+        return service.GetSWQWList(action,jsonRequest);
     }
 }
